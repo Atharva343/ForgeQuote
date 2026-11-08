@@ -18,7 +18,7 @@ const envSchema = z
     GEMINI_MODEL: z.string().trim().default('gemini-3.5-flash-lite'),
     SUPABASE_URL: z.string().optional(),
     SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
-    SUPABASE_STORAGE_BUCKET: z.string().optional(),
+    SUPABASE_STORAGE_BUCKET: z.string().default('forgequote-files'),
     SEED_ESTIMATOR_PASSWORD: z.string().optional(),
     SEED_SALES_HEAD_PASSWORD: z.string().optional(),
     SELLER_COMPANY_NAME: z.string().optional(),

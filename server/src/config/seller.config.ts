@@ -19,8 +19,6 @@ export interface SellerCompanyProfile {
 }
 
 export function getSellerProfile(): SellerCompanyProfile {
-  const isProd = env.NODE_ENV === 'production';
-
   const companyName = env.SELLER_COMPANY_NAME?.trim();
   const gstin = env.SELLER_GSTIN?.trim();
   const address = env.SELLER_ADDRESS?.trim();
@@ -42,6 +40,7 @@ export function getSellerProfile(): SellerCompanyProfile {
 
   const hasAllRequired = missingRequiredFields.length === 0;
 
+  // Fully configured legal seller profile with real legal credentials
   if (hasAllRequired) {
     return {
       isConfigured: true,
@@ -62,43 +61,26 @@ export function getSellerProfile(): SellerCompanyProfile {
     };
   }
 
-  // If in production and missing required fields
-  if (isProd) {
-    return {
-      isConfigured: false,
-      isDemo: false,
-      companyName: companyName || '[SELLER COMPANY NOT CONFIGURED]',
-      address,
-      email,
-      phone,
-      gstin,
-      website,
-      paymentTerms,
-      deliveryTerms,
-      validityText,
-      signatoryName,
-      signatoryDesignation,
-      logoPath,
-      missingRequiredFields,
-    };
-  }
-
-  // Development/Test fallback: explicitly marked DEMO profile
+  // Safe Demo Mode: Activated whenever real legal credentials are missing.
+  // Never invent GSTIN, registered address, or legal company details.
+  // Generated PDFs prominently display DEMO / NOT FOR COMMERCIAL USE.
   return {
     isConfigured: false,
     isDemo: true,
-    companyName: 'ForgeQuote Precision Engineering Ltd. (DEMO / NOT FOR COMMERCIAL USE)',
-    address: 'Demo Precision Park, Phase II, Chakan, Pune, Maharashtra 410501 [DEMO ADDRESS]',
-    email: 'quotes@demo.forgequote.io [DEMO]',
-    phone: '+91 20 5555 0199 [DEMO]',
-    gstin: '27AAAAA0000A1Z5 [DEMO GSTIN]',
-    website: 'https://demo.forgequote.io',
-    paymentTerms: '30 Days Net from invoice date [DEMO TERMS]',
-    deliveryTerms: 'Ex-Works Pune [DEMO TERMS]',
-    validityText: '30 days from quotation date [DEMO]',
-    signatoryName: 'Authorized Commercial Signatory [DEMO]',
-    signatoryDesignation: 'Head of Estimating & Commercials [DEMO]',
+    companyName: companyName
+      ? `${companyName} (DEMO / NOT FOR COMMERCIAL USE)`
+      : 'ForgeQuote Demo System (DEMO / NOT FOR COMMERCIAL USE)',
+    address: address || undefined,
+    email: email || undefined,
+    phone: phone || undefined,
+    gstin: gstin || undefined,
+    website: website || undefined,
+    paymentTerms: paymentTerms || 'Standard Terms (DEMO / NOT FOR COMMERCIAL USE)',
+    deliveryTerms: deliveryTerms || 'Ex-Works (DEMO / NOT FOR COMMERCIAL USE)',
+    validityText,
+    signatoryName: signatoryName || undefined,
+    signatoryDesignation: signatoryDesignation || undefined,
+    logoPath,
     missingRequiredFields,
   };
 }
-
