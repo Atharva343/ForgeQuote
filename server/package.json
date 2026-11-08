@@ -1,0 +1,59 @@
+{
+  "name": "forgequote-server",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:approval": "vitest run src/tests/approval.test.ts",
+    "test:pdf": "vitest run src/tests/pdf.test.ts",
+    "test:intake": "vitest run src/tests/intake.test.ts",
+    "test:historical": "vitest run src/tests/historical-quotes.test.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@google/genai": "2.32.0",
+    "@prisma/client": "6.19.3",
+    "@supabase/supabase-js": "^2.49.1",
+    "@types/multer": "^1.4.13",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1",
+    "pdfkit": "^0.16.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.1",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/pdfkit": "^0.13.9",
+    "@types/supertest": "^6.0.2",
+    "eslint": "^9.20.1",
+    "prettier": "^3.5.1",
+    "prisma": "6.19.3",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}
